@@ -6,20 +6,32 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
+        android:id="@+id/navigation_sleep"
+        android:name="com.hapiy.ui.sleep.SleepFragment"
+        android:label="@string/title_sleep"
+        tools:layout="@layout/fragment_sleep" />
+
+    <fragment
+        android:id="@+id/navigation_body"
+        android:name="com.hapiy.ui.body.BodyFragment"
+        android:label="@string/title_body"
+        tools:layout="@layout/fragment_body" />
+
+    <fragment
         android:id="@+id/navigation_home"
         android:name="com.hapiy.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.hapiy.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_mind"
+        android:name="com.hapiy.ui.mind.MindFragment"
+        android:label="@string/title_mind"
+        tools:layout="@layout/fragment_mind" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.hapiy.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_create"
+        android:name="com.hapiy.ui.create.CreateFragment"
+        android:label="@string/title_create"
+        tools:layout="@layout/fragment_create" />
 </navigation>

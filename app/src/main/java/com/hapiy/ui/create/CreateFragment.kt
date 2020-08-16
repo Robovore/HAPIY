@@ -1,4 +1,4 @@
-package com.hapiy.ui.notifications
+package com.hapiy.ui.create
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.hapiy.R
 
-class NotificationsFragment : Fragment() {
+class CreateFragment : Fragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
+    private lateinit var createViewModel: CreateViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_notifications, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
+        createViewModel =
+                ViewModelProviders.of(this).get(CreateViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_create, container, false)
+        val textView: TextView = root.findViewById(R.id.text_create)
+        createViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

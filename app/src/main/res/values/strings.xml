@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">HAPIY</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_sleep">Rest</string>
+    <string name="title_body">Endurance</string>
+    <string name="title_home">Overall Status</string>
+    <string name="title_mind">Mind</string>
+    <string name="title_create">Create</string>
 </resources>

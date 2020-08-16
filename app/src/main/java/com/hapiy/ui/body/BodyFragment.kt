@@ -1,4 +1,4 @@
-package com.hapiy.ui.dashboard
+package com.hapiy.ui.body
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.hapiy.R
 
-class DashboardFragment : Fragment() {
+class BodyFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var bodyViewModel: BodyViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        bodyViewModel =
+                ViewModelProviders.of(this).get(BodyViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_body, container, false)
+        val textView: TextView = root.findViewById(R.id.text_body)
+        bodyViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
