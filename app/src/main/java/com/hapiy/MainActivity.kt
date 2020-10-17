@@ -22,5 +22,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_sleep, R.id.navigation_body, R.id.navigation_home, R.id.navigation_mind, R.id.navigation_create))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+
     }
 }
