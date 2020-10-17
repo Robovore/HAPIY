@@ -1,14 +1,20 @@
 package com.hapiy
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.hapiy.ui.home.HomeFragment
+
 
 class MainActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,5 +31,31 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    }
+
+    fun homeBtnClicked(v: View?) {
+//        val myIntent = Intent(this, HomeFragment::class.java)
+//        startActivity(intent)
+
+        val fragment: Fragment = HomeFragment()
+
+        val fm = supportFragmentManager
+        val transaction: FragmentTransaction = fm.beginTransaction()
+        transaction.replace(R.id.nav_host_fragment, fragment)
+        transaction.commit()
+
+    }
+
+    fun getVisibleFragment(): Fragment? {
+        val fragmentManager =
+            this@MainActivity.supportFragmentManager
+        val fragments =
+            fragmentManager.fragments
+        if (fragments != null) {
+            for (fragment in fragments) {
+                if (fragment != null && fragment.isVisible) return fragment
+            }
+        }
+        return null
     }
 }

@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.hapiy.MainActivity
 import com.hapiy.R
 
 class SleepFragment : Fragment() {
@@ -26,6 +28,7 @@ class SleepFragment : Fragment() {
         sleepViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+
         return root
     }
 }
