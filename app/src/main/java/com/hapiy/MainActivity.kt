@@ -1,26 +1,29 @@
 package com.hapiy
 
-import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.hapiy.ui.body.BodyFragment
 import com.hapiy.ui.create.CreateFragment
 import com.hapiy.ui.home.HomeFragment
-import com.hapiy.ui.home.HomeViewModel
 import com.hapiy.ui.mind.MindFragment
 import com.hapiy.ui.sleep.SleepFragment
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
+    //Track daily input tracking
+    // database[date][pillar][key] = value
+    // database[20201117][SLEEP][CONS] = value
+    var database = arrayOfNulls<Array<Array<Int>>>(20)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +41,6 @@ class MainActivity : AppCompatActivity() {
                 HomeFragment()
             ).commit()
         }
-
 
 
     }
@@ -71,7 +73,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     fun getVisibleFragment(): Fragment? {
         val fragmentManager =
             this@MainActivity.supportFragmentManager
@@ -83,5 +84,25 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return null
+    }
+
+    fun setPillarValue(date: Int?, pillar: Int?, key: Int?, value: Int?) {
+        if (value != null) {
+            if (pillar != null) {
+                database[date!!]?.get(pillar)?.set(key!!, value)
+            }
+        };
+    }
+
+    fun getPillarValue(date: Int?, pillar: Int?, key: Int?): Int? {
+        return database[date!!]?.get(pillar!!)?.get(key!!);
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getDateAsInt(date: LocalDateTime? ): Int {
+        if (date != null) {
+            return (date.format(DateTimeFormatter.BASIC_ISO_DATE)).toInt()
+        }
+        return 0;
     }
 }

@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class SleepViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is sleep Fragment"
+        value = "This is sleep Fragment test"
     }
     val text: LiveData<String> = _text
 }
