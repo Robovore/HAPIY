@@ -4,9 +4,8 @@ import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.view.Window
+import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -16,6 +15,8 @@ import com.hapiy.ui.create.CreateFragment
 import com.hapiy.ui.home.HomeFragment
 import com.hapiy.ui.mind.MindFragment
 import com.hapiy.ui.sleep.SleepFragment
+import com.hapiy.ui.sleep.SleepScoringFragment
+import kotlinx.android.synthetic.main.fragment_sleep_scoring.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -23,11 +24,28 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     //Track daily input tracking
     // database[date][pillar][key] = value
-    // database[20201117][SLEEP][CONS] = value
-    var database = arrayOfNulls<Array<Array<Int>>>(20)
-    enum class PILLAR { SLEEP, MIND, BODY, CREATE, MAIN }
+    // database[20201117][SLEEP][TYPE] = value
+    var database = Array(1000) {Array(5) {Array(10) {0} } }
+//    var database = arrayOfNulls<Array<Array<Int>>>(1000000)
+    enum class PILLAR { MAIN, SLEEP, BODY, MIND, CREATE }
+    enum class MAIN_TYPE { OVERALL }
+
+    // Manage Sleep Scorings
+    enum class SLEEP_TYPE { SLEEP_TIME_AVG, WAKE_TIME_AVG, SLEEP_SCORE }
+    val sleepTimeDatabase: Queue<Int> = LinkedList<Int>()
+    val wakeTimeDatabase: Queue<Int> = LinkedList<Int>()
+
+    // Manage Fitness Scorings
+    enum class BODY_TYPE { LOW_FITNESS, HIGH_FITNESS, GOOD_FOOD, BAD_FOOD, FITNESS_SCORE }
+
+    // Manage Mind Scorings
+    enum class MIND_TYPE { RELAX_SCORE, STRESS_SCORE }
+
+    // Manage Create Scorings
+    enum class CREATE_TYPE { ART, MUSIC, WORK, READ, COOK, CODE, DANCE }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,14 +54,13 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener(navListener)
 
-        //I added this if statement to keep the selected fragment when rotating the device
+        // Keep the selected fragment when rotating the device
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(
                 R.id.nav_host_fragment,
                 HomeFragment()
             ).commit()
         }
-
 
 
 
@@ -78,6 +95,41 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun addBtnClicked(v: View?) {
+        val fragment: Fragment = SleepScoringFragment()
+        val fm = supportFragmentManager
+        val transaction: FragmentTransaction? = fm?.beginTransaction()
+        transaction?.replace(R.id.nav_host_fragment, fragment)
+        transaction?.commit()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun sleepSaveBtnClicked(v: View?) {
+        // Save values
+        sleepTimeDatabase?.add(sleepTime.progress)
+        wakeTimeDatabase?.add(wakeTime.progress)
+        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.SLEEP.ordinal)
+            ?.set(MainActivity.SLEEP_TYPE.SLEEP_TIME_AVG.ordinal,
+                sleepTimeDatabase.average().toInt()
+            )
+        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.SLEEP.ordinal)
+            ?.set(MainActivity.SLEEP_TYPE.WAKE_TIME_AVG.ordinal,
+                wakeTimeDatabase.average().toInt()
+            )
+        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.SLEEP.ordinal)
+            ?.set(MainActivity.SLEEP_TYPE.SLEEP_SCORE.ordinal,
+                (sleepTime.progress+wakeTime.progress).toInt()
+            )
+
+        // Return to Sleep Fragment TODO: OR go to next log if logging everything
+        val fragment: Fragment = SleepFragment()
+        val fm = supportFragmentManager
+        val transaction: FragmentTransaction? = fm?.beginTransaction()
+        transaction?.replace(R.id.nav_host_fragment, fragment)
+        transaction?.commit()
+
+    }
+
     fun getVisibleFragment(): Fragment? {
         val fragmentManager =
             this@MainActivity.supportFragmentManager
@@ -91,36 +143,22 @@ class MainActivity : AppCompatActivity() {
         return null
     }
 
+    // database[20201117][SLEEP][TYPE] = value
     fun setPillarValue(date: Int?, pillar: Int?, key: Int?, value: Int?) {
-        if (value != null) {
-            if (pillar != null) {
-                database[date!!]?.get(pillar)?.set(key!!, value)
-            }
-        };
+        database[date!!]?.get(pillar!!)?.set(key!!, value!!);
     }
 
     fun getPillarValue(date: Int?, pillar: Int?, key: Int?): Int? {
-        return database[date!!]?.get(pillar!!)?.get(key!!);
-    }
-
-    fun getPillarIdx(name: String?): Int? {
-        if (name == "SLEEP")
-            return PILLAR.SLEEP.ordinal;
-        else if ( name == "BODY" )
-            return PILLAR.BODY.ordinal;
-        else if (name == "MIND")
-            return PILLAR.MIND.ordinal;
-        else if (name == "CREATE")
-            return PILLAR.CREATE.ordinal;
-        else if (name == "MAIN")
-            return PILLAR.MAIN.ordinal;
-        return 0;
+        return database[date!!]?.get(pillar!!)?.get(key!!)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun getDateAsInt(date: LocalDateTime? ): Int {
         if (date != null) {
-            return (date.format(DateTimeFormatter.BASIC_ISO_DATE)).toInt()
+            var dateCode = (date.format(DateTimeFormatter.ISO_ORDINAL_DATE)) //Year and day of year	'2012-337'
+
+            val dateValues: List<String> = dateCode.split("-").map { it -> it.trim() }
+            return (365 * (dateValues[0].toInt()-2021)) + dateValues[1].toInt()
         }
         return 0;
     }

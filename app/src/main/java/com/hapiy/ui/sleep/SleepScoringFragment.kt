@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SeekBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.hapiy.MainActivity
 import com.hapiy.R
 import com.hapiy.ui.home.HomeFragment
+import kotlinx.android.synthetic.main.fragment_sleep_scoring.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -24,30 +26,23 @@ import java.util.*
 //val sleepTimeDatabase: Queue<Int> = LinkedList<Int>()
 //val wakeTimeDatabase: Queue<Int> = LinkedList<Int>()
 
-class SleepFragment : Fragment() {
+class SleepScoringFragment : Fragment() {
 
     private lateinit var sleepViewModel: SleepViewModel
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         sleepViewModel =
-                ViewModelProviders.of(this).get(SleepViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_sleep, container, false)
+            ViewModelProviders.of(this).get(SleepViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_sleep_scoring, container, false)
 
-        val activity = this.activity as MainActivity?
-        val sleepScore: String = activity?.getPillarValue(getDateAsInt(LocalDateTime.now()), MainActivity.PILLAR.SLEEP.ordinal, MainActivity.SLEEP_TYPE.SLEEP_SCORE.ordinal).toString()
-
-        val scoreText: TextView = root.findViewById(R.id.text_sleep)
-        if( sleepScore != "0" )
-        {
-            scoreText.text = "$sleepScore%"
-        }
-
+        val sleepTime: SeekBar = root.findViewById(R.id.sleepTime)
+        val wakeTime: SeekBar = root.findViewById(R.id.wakeTime)
 
 
         return root
@@ -63,5 +58,7 @@ class SleepFragment : Fragment() {
         }
         return 0;
     }
+
+
 
 }
