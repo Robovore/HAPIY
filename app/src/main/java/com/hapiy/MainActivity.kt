@@ -4,7 +4,9 @@ import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -18,18 +20,18 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-
 class MainActivity : AppCompatActivity() {
     //Track daily input tracking
     // database[date][pillar][key] = value
     // database[20201117][SLEEP][CONS] = value
     var database = arrayOfNulls<Array<Array<Int>>>(20)
+    enum class PILLAR { SLEEP, MIND, BODY, CREATE, MAIN }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
+        setContentView(R.layout.activity_main)
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener(navListener)
@@ -41,6 +43,9 @@ class MainActivity : AppCompatActivity() {
                 HomeFragment()
             ).commit()
         }
+
+
+
 
 
     }
@@ -96,6 +101,20 @@ class MainActivity : AppCompatActivity() {
 
     fun getPillarValue(date: Int?, pillar: Int?, key: Int?): Int? {
         return database[date!!]?.get(pillar!!)?.get(key!!);
+    }
+
+    fun getPillarIdx(name: String?): Int? {
+        if (name == "SLEEP")
+            return PILLAR.SLEEP.ordinal;
+        else if ( name == "BODY" )
+            return PILLAR.BODY.ordinal;
+        else if (name == "MIND")
+            return PILLAR.MIND.ordinal;
+        else if (name == "CREATE")
+            return PILLAR.CREATE.ordinal;
+        else if (name == "MAIN")
+            return PILLAR.MAIN.ordinal;
+        return 0;
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

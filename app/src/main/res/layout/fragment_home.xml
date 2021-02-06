@@ -8,29 +8,197 @@
     tools:context=".ui.home.HomeFragment">
 
     <ImageView
+        android:id="@+id/backgroundImgDandy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:scaleType="centerCrop"
         android:src="@drawable/dandiliongrey"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.489"
+        app:layout_constraintVertical_bias="0.495" />
+
+    <TextView
+        android:id="@+id/text_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal" />
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/backgroundImgDandy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/operationalImg"
+        android:layout_width="112dp"
+        android:layout_height="160dp"
+        android:src="@drawable/hapiylogo"
+        app:layout_constraintBottom_toBottomOf="@+id/operationalText"
+        app:layout_constraintEnd_toStartOf="@+id/operationalText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/operationalText" />
+
+    <TextView
+        android:id="@+id/operationalText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Operational Score:"
+        app:layout_constraintBottom_toTopOf="@+id/sleepText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/backgroundImgDandy"
+        app:layout_constraintStart_toStartOf="@+id/sleepText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/operationalScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/operationalText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toEndOf="@+id/operationalText"
+        app:layout_constraintTop_toTopOf="@+id/operationalText" />
+
+
+    <ImageView
+        android:id="@+id/sleepImg"
+        android:layout_width="63dp"
+        android:layout_height="51dp"
+        android:src="@drawable/ic_sleep"
+        app:layout_constraintBottom_toBottomOf="@+id/sleepText"
+        app:layout_constraintEnd_toStartOf="@+id/sleepText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sleepText" />
+
+    <TextView
+        android:id="@+id/sleepText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sleep Score:         "
+        app:layout_constraintBottom_toTopOf="@+id/fitnessText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/backgroundImgDandy"
+        app:layout_constraintStart_toStartOf="@+id/fitnessText"
+        app:layout_constraintTop_toBottomOf="@+id/operationalText" />
+
+    <TextView
+        android:id="@+id/sleepScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/sleepText"
+        app:layout_constraintEnd_toEndOf="@+id/operationalScore"
+        app:layout_constraintStart_toEndOf="@+id/sleepText"
+        app:layout_constraintStart_toStartOf="@+id/operationalScore"
+        app:layout_constraintTop_toTopOf="@+id/sleepText" />
+
+    <TextView
+        android:id="@+id/fitnessText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fitness Score:        "
+        app:layout_constraintBottom_toTopOf="@+id/relaxText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/backgroundImgDandy"
+        app:layout_constraintStart_toStartOf="@+id/relaxText"
+        app:layout_constraintTop_toBottomOf="@+id/sleepText" />
+
+    <TextView
+        android:id="@+id/fitnessScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/fitnessText"
+        app:layout_constraintEnd_toEndOf="@+id/sleepScore"
+        app:layout_constraintStart_toEndOf="@+id/fitnessText"
+        app:layout_constraintStart_toStartOf="@+id/sleepScore"
+        app:layout_constraintTop_toTopOf="@+id/fitnessText" />
+
+
+    <TextView
+        android:id="@+id/relaxText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Relaxation Score: "
+        app:layout_constraintBottom_toTopOf="@+id/createText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/createText"
+        app:layout_constraintTop_toBottomOf="@+id/fitnessText" />
+
+    <TextView
+        android:id="@+id/relaxScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/relaxText"
+        app:layout_constraintEnd_toEndOf="@+id/fitnessScore"
+        app:layout_constraintStart_toEndOf="@+id/relaxText"
+        app:layout_constraintStart_toStartOf="@+id/fitnessScore"
+        app:layout_constraintTop_toTopOf="@+id/relaxText" />
+
+    <TextView
+        android:id="@+id/createText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:text="Creation Score: "
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundImgDandy"
+        app:layout_constraintEnd_toEndOf="@+id/backgroundImgDandy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relaxText" />
+
+    <TextView
+        android:id="@+id/createScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="@+id/createText"
+        app:layout_constraintEnd_toEndOf="@+id/relaxScore"
+        app:layout_constraintStart_toEndOf="@+id/createText"
+        app:layout_constraintStart_toStartOf="@+id/relaxScore"
+        app:layout_constraintTop_toTopOf="@+id/createText"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/fitnessImg"
+        android:layout_width="81dp"
+        android:layout_height="79dp"
+        android:src="@drawable/ic_body"
+        app:layout_constraintBottom_toBottomOf="@+id/fitnessText"
+        app:layout_constraintEnd_toStartOf="@+id/fitnessText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fitnessText" />
+
+    <ImageView
+        android:id="@+id/relaxImg"
+        android:layout_width="102dp"
+        android:layout_height="91dp"
+        android:src="@drawable/ic_mind"
+        app:layout_constraintBottom_toBottomOf="@+id/relaxText"
+        app:layout_constraintEnd_toStartOf="@+id/relaxText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/relaxText" />
+
+    <ImageView
+        android:id="@+id/createImg"
+        android:layout_width="91dp"
+        android:layout_height="93dp"
+        android:src="@drawable/ic_create"
+        app:layout_constraintBottom_toBottomOf="@+id/createText"
+        app:layout_constraintEnd_toStartOf="@+id/createText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/createText" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

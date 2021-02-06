@@ -15,6 +15,7 @@ import com.hapiy.R
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+//enum class PILLAR { SLEEP, MIND, BODY, CREATE, MAIN }
 
 class SleepFragment : Fragment() {
 
@@ -35,8 +36,8 @@ class SleepFragment : Fragment() {
         val dateInt: Int = ((LocalDateTime.now()).format(DateTimeFormatter.BASIC_ISO_DATE)).toInt()
         //sleep = 0, consis = 0
         val activity = this.activity as MainActivity?
-        val textTest: String = ((activity?.getPillarValue(0, 0, 0) ?: 100) + 1).toString()
-        activity?.setPillarValue(0,0,0, (activity?.getPillarValue(0, 0, 0) ?: 100) + 1)
+        val textTest: String = ((activity?.getPillarValue(0, activity.getPillarIdx("SLEEP"), 0) ?: 100) + 1).toString()
+        activity?.setPillarValue(0, activity.getPillarIdx("SLEEP"),0, (activity?.getPillarValue(0, 0, 0) ?: 100) + 1)
         val textView: TextView = root.findViewById(R.id.text_sleep)
         textView.text = textTest
 
