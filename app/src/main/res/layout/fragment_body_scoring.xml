@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/bodyLoggingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter the days movement and fuel intake levels:"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bodyConditionText"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <SeekBar
+        android:id="@+id/lowFitnessSeeker"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="268dp"
+        android:layout_height="30dp"
+        android:max="10"
+        android:progress="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.128" />
+
+    <SeekBar
+        android:id="@+id/highFitnessSeeker"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="269dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="75dp"
+        android:max="10"
+        android:progress="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.535"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lowFitnessSeeker"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <SeekBar
+        android:id="@+id/goodFoodSeeker"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="266dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="75dp"
+        android:max="10"
+        android:progress="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.544"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/highFitnessSeeker"
+        app:layout_constraintVertical_bias="0.002" />
+
+    <SeekBar
+        android:id="@+id/badFoodSeeker"
+        style="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="263dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="75dp"
+        android:max="10"
+        android:progress="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goodFoodSeeker"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/lowFitnessImg"
+        android:layout_width="53dp"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="@+id/lowFitnessSeeker"
+        app:layout_constraintEnd_toStartOf="@+id/lowFitnessSeeker"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/lowFitnessSeeker"
+        app:srcCompat="@drawable/ic_create" />
+
+    <ImageView
+        android:id="@+id/highFitnessImg"
+        android:layout_width="66dp"
+        android:layout_height="59dp"
+        app:layout_constraintBottom_toBottomOf="@+id/highFitnessSeeker"
+        app:layout_constraintEnd_toStartOf="@+id/highFitnessSeeker"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/highFitnessSeeker"
+        app:srcCompat="@drawable/ic_run" />
+
+    <ImageView
+        android:id="@+id/goodFoodImg"
+        android:layout_width="58dp"
+        android:layout_height="54dp"
+        app:layout_constraintBottom_toBottomOf="@+id/goodFoodSeeker"
+        app:layout_constraintEnd_toStartOf="@+id/goodFoodSeeker"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/goodFoodSeeker"
+        app:srcCompat="@drawable/ic_goodfood" />
+
+    <ImageView
+        android:id="@+id/badFoodImg"
+        android:layout_width="71dp"
+        android:layout_height="79dp"
+        app:layout_constraintBottom_toBottomOf="@+id/badFoodSeeker"
+        app:layout_constraintEnd_toStartOf="@+id/badFoodSeeker"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/badFoodSeeker"
+        app:srcCompat="@drawable/ic_badfood"
+        tools:ignore="VectorDrawableCompat" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bodyLoggingBtn"
+        android:layout_width="67dp"
+        android:layout_height="64dp"
+        android:onClick="bodyLoggingBtnClicked"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.809"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/badFoodSeeker"
+        app:layout_constraintVertical_bias="0.173"
+        app:srcCompat="@android:drawable/ic_media_ff" />
+
+    <TextView
+        android:id="@+id/bodyConditionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BODY CONDITION"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

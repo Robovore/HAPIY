@@ -43,9 +43,9 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
         android:onClick="sleepSaveBtnClicked"
+        android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
         app:srcCompat="@android:drawable/ic_media_ff"
         tools:layout_editor_absoluteX="313dp"
         tools:layout_editor_absoluteY="367dp" />

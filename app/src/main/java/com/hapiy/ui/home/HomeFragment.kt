@@ -40,6 +40,12 @@ class HomeFragment : Fragment() {
         val sleepScore: String = activity?.getPillarValue(activity?.getDateAsInt(LocalDateTime.now()), MainActivity.PILLAR.SLEEP.ordinal, MainActivity.SLEEP_TYPE.SLEEP_SCORE.ordinal).toString()
         sleepScoreText.text = sleepScore
 
+        val bodyScoreText: TextView = root.findViewById(R.id.fitnessScore)
+        val bodyScore: String = activity?.getPillarValue(activity?.getDateAsInt(LocalDateTime.now()), MainActivity.PILLAR.BODY.ordinal, MainActivity.BODY_TYPE.FITNESS_SCORE.ordinal).toString()
+        bodyScoreText.text = bodyScore
+
+
+
 
 
 

@@ -11,11 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.hapiy.ui.body.BodyFragment
+import com.hapiy.ui.body.BodyScoringFragment
 import com.hapiy.ui.create.CreateFragment
 import com.hapiy.ui.home.HomeFragment
 import com.hapiy.ui.mind.MindFragment
 import com.hapiy.ui.sleep.SleepFragment
 import com.hapiy.ui.sleep.SleepScoringFragment
+import kotlinx.android.synthetic.main.fragment_body.*
+import kotlinx.android.synthetic.main.fragment_body_scoring.*
 import kotlinx.android.synthetic.main.fragment_sleep_scoring.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -36,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     val wakeTimeDatabase: Queue<Int> = LinkedList<Int>()
 
     // Manage Fitness Scorings
-    enum class BODY_TYPE { LOW_FITNESS, HIGH_FITNESS, GOOD_FOOD, BAD_FOOD, FITNESS_SCORE }
+    enum class BODY_TYPE { LOW_FITNESS, HIGH_FITNESS, GOOD_FOOD, BAD_FOOD, FITNESS_SCORE, FOOD_SCORE }
 
     // Manage Mind Scorings
     enum class MIND_TYPE { RELAX_SCORE, STRESS_SCORE }
@@ -97,6 +100,52 @@ class MainActivity : AppCompatActivity() {
 
     fun addBtnClicked(v: View?) {
         val fragment: Fragment = SleepScoringFragment()
+        val fm = supportFragmentManager
+        val transaction: FragmentTransaction? = fm?.beginTransaction()
+        transaction?.replace(R.id.nav_host_fragment, fragment)
+        transaction?.commit()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun bodyLoggingBtnClicked(v: View?) {
+        // Save values
+        var fitnessAvg = (lowFitnessSeeker.progress + highFitnessSeeker.progress) / 2
+        var foodAvg = (goodFoodSeeker.progress + badFoodSeeker.progress) / 2
+        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.BODY.ordinal)
+            ?.set(MainActivity.BODY_TYPE.FITNESS_SCORE.ordinal,
+                fitnessAvg
+            )
+        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.BODY.ordinal)
+            ?.set(MainActivity.BODY_TYPE.LOW_FITNESS.ordinal,
+                lowFitnessSeeker.progress
+            )
+        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.BODY.ordinal)
+            ?.set(MainActivity.BODY_TYPE.HIGH_FITNESS.ordinal,
+                highFitnessSeeker.progress
+            )
+        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.BODY.ordinal)
+            ?.set(MainActivity.BODY_TYPE.FOOD_SCORE.ordinal,
+                foodAvg
+            )
+        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.BODY.ordinal)
+            ?.set(MainActivity.BODY_TYPE.GOOD_FOOD.ordinal,
+                goodFoodSeeker.progress
+            )
+        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.BODY.ordinal)
+            ?.set(MainActivity.BODY_TYPE.BAD_FOOD.ordinal,
+                badFoodSeeker.progress
+            )
+
+        // Return to Sleep Fragment TODO: OR go to next log if logging everything
+        val fragment: Fragment = BodyFragment()
+        val fm = supportFragmentManager
+        val transaction: FragmentTransaction? = fm?.beginTransaction()
+        transaction?.replace(R.id.nav_host_fragment, fragment)
+        transaction?.commit()
+    }
+
+    fun bodyAddClicked(v: View?) {
+        val fragment: Fragment = BodyScoringFragment()
         val fm = supportFragmentManager
         val transaction: FragmentTransaction? = fm?.beginTransaction()
         transaction?.replace(R.id.nav_host_fragment, fragment)
