@@ -44,8 +44,17 @@ class HomeFragment : Fragment() {
         val bodyScore: String = activity?.getPillarValue(activity?.getDateAsInt(LocalDateTime.now()), MainActivity.PILLAR.BODY.ordinal, MainActivity.BODY_TYPE.FITNESS_SCORE.ordinal).toString()
         bodyScoreText.text = bodyScore
 
+        val relaxScoreText: TextView = root.findViewById(R.id.relaxScore)
+        val relaxScore: String = activity?.getPillarValue(activity?.getDateAsInt(LocalDateTime.now()), MainActivity.PILLAR.MIND.ordinal, MainActivity.MIND_TYPE.MIND_SCORE.ordinal).toString()
+        relaxScoreText.text = relaxScore
 
+        val createScoreText: TextView = root.findViewById(R.id.createScore)
+        val createScore: String = activity?.getPillarValue(activity?.getDateAsInt(LocalDateTime.now()), MainActivity.PILLAR.CREATE.ordinal, MainActivity.CREATE_TYPE.CREATE_SCORE.ordinal).toString()
+        createScoreText.text = createScore
 
+        val conditionScoreText: TextView = root.findViewById(R.id.operationalScore)
+        val conditionScore: String = ((sleepScore.toInt()+bodyScore.toInt()+relaxScore.toInt()+createScore.toInt())/4).toString()
+        conditionScoreText.text = conditionScore
 
 
 

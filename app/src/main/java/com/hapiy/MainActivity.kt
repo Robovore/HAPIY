@@ -14,11 +14,15 @@ import com.hapiy.ui.body.BodyFragment
 import com.hapiy.ui.body.BodyScoringFragment
 import com.hapiy.ui.create.CreateFragment
 import com.hapiy.ui.home.HomeFragment
+import com.hapiy.ui.mind.CreateScoringFragment
 import com.hapiy.ui.mind.MindFragment
+import com.hapiy.ui.mind.MindScoringFragment
 import com.hapiy.ui.sleep.SleepFragment
 import com.hapiy.ui.sleep.SleepScoringFragment
 import kotlinx.android.synthetic.main.fragment_body.*
 import kotlinx.android.synthetic.main.fragment_body_scoring.*
+import kotlinx.android.synthetic.main.fragment_create_scoring.*
+import kotlinx.android.synthetic.main.fragment_mind_scoring.*
 import kotlinx.android.synthetic.main.fragment_sleep_scoring.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -34,18 +38,18 @@ class MainActivity : AppCompatActivity() {
     enum class MAIN_TYPE { OVERALL }
 
     // Manage Sleep Scorings
-    enum class SLEEP_TYPE { SLEEP_TIME_AVG, WAKE_TIME_AVG, SLEEP_SCORE }
+    enum class SLEEP_TYPE { SLEEP_SCORE, SLEEP_TIME_AVG, WAKE_TIME_AVG }
     val sleepTimeDatabase: Queue<Int> = LinkedList<Int>()
     val wakeTimeDatabase: Queue<Int> = LinkedList<Int>()
 
     // Manage Fitness Scorings
-    enum class BODY_TYPE { LOW_FITNESS, HIGH_FITNESS, GOOD_FOOD, BAD_FOOD, FITNESS_SCORE, FOOD_SCORE }
+    enum class BODY_TYPE { FOOD_SCORE, LOW_FITNESS, HIGH_FITNESS, GOOD_FOOD, BAD_FOOD, FITNESS_SCORE }
 
     // Manage Mind Scorings
-    enum class MIND_TYPE { RELAX_SCORE, STRESS_SCORE }
+    enum class MIND_TYPE { MIND_SCORE, RELAX_SCORE, STRESS_SCORE }
 
     // Manage Create Scorings
-    enum class CREATE_TYPE { ART, MUSIC, WORK, READ, COOK, CODE, DANCE }
+    enum class CREATE_TYPE { CREATE_SCORE, ART, MUSIC, WORK, READ, COOK, CODE, DANCE }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -107,6 +111,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+    fun saveMindLogging(v: View?) {
+        // Save score
+        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.MIND.ordinal)
+            ?.set(MainActivity.MIND_TYPE.MIND_SCORE.ordinal,
+                mindSeeker.progress
+            )
+
+        // Return to Sleep Fragment TODO: OR go to next log if logging everything
+        val fragment: Fragment = MindFragment()
+        val fm = supportFragmentManager
+        val transaction: FragmentTransaction? = fm?.beginTransaction()
+        transaction?.replace(R.id.nav_host_fragment, fragment)
+        transaction?.commit()
+    }
+
+    fun addMindBtnClicked(v: View?) {
+        val fragment: Fragment = MindScoringFragment()
+        val fm = supportFragmentManager
+        val transaction: FragmentTransaction? = fm?.beginTransaction()
+        transaction?.replace(R.id.nav_host_fragment, fragment)
+        transaction?.commit()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     fun bodyLoggingBtnClicked(v: View?) {
         // Save values
         var fitnessAvg = (lowFitnessSeeker.progress + highFitnessSeeker.progress) / 2
@@ -152,6 +180,30 @@ class MainActivity : AppCompatActivity() {
         transaction?.commit()
     }
 
+    fun addCreateBtn(v: View?) {
+        val fragment: Fragment = CreateScoringFragment()
+        val fm = supportFragmentManager
+        val transaction: FragmentTransaction? = fm?.beginTransaction()
+        transaction?.replace(R.id.nav_host_fragment, fragment)
+        transaction?.commit()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun saveCreateBtn(v: View?) {
+        // Save create info
+        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.CREATE.ordinal)
+            ?.set(MainActivity.CREATE_TYPE.CREATE_SCORE.ordinal,
+                createSeeker.progress
+            )
+
+        // Return to Sleep Fragment TODO: OR go to next log if logging everything
+        val fragment: Fragment = CreateFragment()
+        val fm = supportFragmentManager
+        val transaction: FragmentTransaction? = fm?.beginTransaction()
+        transaction?.replace(R.id.nav_host_fragment, fragment)
+        transaction?.commit()
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun sleepSaveBtnClicked(v: View?) {
         // Save values
@@ -167,7 +219,7 @@ class MainActivity : AppCompatActivity() {
             )
         database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.SLEEP.ordinal)
             ?.set(MainActivity.SLEEP_TYPE.SLEEP_SCORE.ordinal,
-                (sleepTime.progress+wakeTime.progress).toInt()
+                (sleepTime.progress+wakeTime.progress)
             )
 
         // Return to Sleep Fragment TODO: OR go to next log if logging everything

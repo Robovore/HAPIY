@@ -1,4 +1,4 @@
-package com.hapiy.ui.body
+package com.hapiy.ui.mind
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.hapiy.MainActivity
 import com.hapiy.R
+import com.hapiy.ui.create.CreateViewModel
 import com.hapiy.ui.home.HomeFragment
 import kotlinx.android.synthetic.main.fragment_sleep_scoring.*
 import java.time.LocalDateTime
@@ -22,10 +23,10 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 //FROM MAIN ACTIVITY
-//enum class BODY_TYPE { LOW_FITNESS, HIGH_FITNESS, GOOD_FOOD, BAD_FOOD, FITNESS_SCORE }
+//enum class CREATE_TYPE { CREATE_SCORE, ART, MUSIC, WORK, READ, COOK, CODE, DANCE }
 
-class BodyScoringFragment : Fragment() {
-    private lateinit var bodyViewModel: BodyViewModel
+class CreateScoringFragment : Fragment() {
+    private lateinit var createViewModel: CreateViewModel
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
@@ -34,14 +35,11 @@ class BodyScoringFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        bodyViewModel =
-            ViewModelProviders.of(this).get(BodyViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_body_scoring, container, false)
+        createViewModel =
+            ViewModelProviders.of(this).get(CreateViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_create_scoring, container, false)
 
-        val lowFitness: SeekBar = root.findViewById(R.id.lowFitnessSeeker)
-        val highFitness: SeekBar = root.findViewById(R.id.highFitnessSeeker)
-        val goodFood: SeekBar = root.findViewById(R.id.goodFoodSeeker)
-        val badFood: SeekBar = root.findViewById(R.id.badFoodSeeker)
+        val createSeeker: SeekBar = root.findViewById(R.id.createSeeker)
 
         return root
     }
