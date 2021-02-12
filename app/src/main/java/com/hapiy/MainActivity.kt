@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.hapiy.ui.home.HappyScoringFragment
 import com.hapiy.ui.body.BodyFragment
 import com.hapiy.ui.body.BodyScoringFragment
 import com.hapiy.ui.create.CreateFragment
@@ -50,6 +51,9 @@ class MainActivity : AppCompatActivity() {
 
     // Manage Create Scorings
     enum class CREATE_TYPE { CREATE_SCORE, ART, MUSIC, WORK, READ, COOK, CODE, DANCE }
+
+    // Track if logging all scores or just single pillar
+    var boolAddAll = 0;
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -118,12 +122,21 @@ class MainActivity : AppCompatActivity() {
                 mindSeeker.progress
             )
 
-        // Return to Sleep Fragment TODO: OR go to next log if logging everything
-        val fragment: Fragment = MindFragment()
-        val fm = supportFragmentManager
-        val transaction: FragmentTransaction? = fm?.beginTransaction()
-        transaction?.replace(R.id.nav_host_fragment, fragment)
-        transaction?.commit()
+        // Return to Sleep Fragment
+        if(boolAddAll == 0) {
+            val fragment: Fragment = MindFragment()
+            val fm = supportFragmentManager
+            val transaction: FragmentTransaction? = fm?.beginTransaction()
+            transaction?.replace(R.id.nav_host_fragment, fragment)
+            transaction?.commit()
+        }
+        else{
+            val fragment: Fragment = CreateScoringFragment()
+            val fm = supportFragmentManager
+            val transaction: FragmentTransaction? = fm?.beginTransaction()
+            transaction?.replace(R.id.nav_host_fragment, fragment)
+            transaction?.commit()
+        }
     }
 
     fun addMindBtnClicked(v: View?) {
@@ -164,12 +177,21 @@ class MainActivity : AppCompatActivity() {
                 badFoodSeeker.progress
             )
 
-        // Return to Sleep Fragment TODO: OR go to next log if logging everything
-        val fragment: Fragment = BodyFragment()
-        val fm = supportFragmentManager
-        val transaction: FragmentTransaction? = fm?.beginTransaction()
-        transaction?.replace(R.id.nav_host_fragment, fragment)
-        transaction?.commit()
+        // Return to Sleep Fragment
+        if(boolAddAll == 0) {
+            val fragment: Fragment = BodyFragment()
+            val fm = supportFragmentManager
+            val transaction: FragmentTransaction? = fm?.beginTransaction()
+            transaction?.replace(R.id.nav_host_fragment, fragment)
+            transaction?.commit()
+        }
+        else{
+            val fragment: Fragment = MindScoringFragment()
+            val fm = supportFragmentManager
+            val transaction: FragmentTransaction? = fm?.beginTransaction()
+            transaction?.replace(R.id.nav_host_fragment, fragment)
+            transaction?.commit()
+        }
     }
 
     fun bodyAddClicked(v: View?) {
@@ -178,6 +200,33 @@ class MainActivity : AppCompatActivity() {
         val transaction: FragmentTransaction? = fm?.beginTransaction()
         transaction?.replace(R.id.nav_host_fragment, fragment)
         transaction?.commit()
+    }
+
+    fun addAllScores(v: View?) {
+        boolAddAll = 1;
+        val fragment: Fragment = HappyScoringFragment()
+        val fm = supportFragmentManager
+        val transaction: FragmentTransaction? = fm?.beginTransaction()
+        transaction?.replace(R.id.nav_host_fragment, fragment)
+        transaction?.commit()
+    }
+
+    fun saveMood(v: View?) {
+        if(boolAddAll == 1) {
+            val fragment: Fragment = SleepScoringFragment()
+            val fm = supportFragmentManager
+            val transaction: FragmentTransaction? = fm?.beginTransaction()
+            transaction?.replace(R.id.nav_host_fragment, fragment)
+            transaction?.commit()
+        }
+        else
+        {
+            val fragment: Fragment = HomeFragment()
+            val fm = supportFragmentManager
+            val transaction: FragmentTransaction? = fm?.beginTransaction()
+            transaction?.replace(R.id.nav_host_fragment, fragment)
+            transaction?.commit()
+        }
     }
 
     fun addCreateBtn(v: View?) {
@@ -196,12 +245,22 @@ class MainActivity : AppCompatActivity() {
                 createSeeker.progress
             )
 
-        // Return to Sleep Fragment TODO: OR go to next log if logging everything
-        val fragment: Fragment = CreateFragment()
-        val fm = supportFragmentManager
-        val transaction: FragmentTransaction? = fm?.beginTransaction()
-        transaction?.replace(R.id.nav_host_fragment, fragment)
-        transaction?.commit()
+        // Return to Sleep Fragment
+        if(boolAddAll == 0) {
+            val fragment: Fragment = CreateFragment()
+            val fm = supportFragmentManager
+            val transaction: FragmentTransaction? = fm?.beginTransaction()
+            transaction?.replace(R.id.nav_host_fragment, fragment)
+            transaction?.commit()
+        }
+        else {
+            boolAddAll = 0;
+            val fragment: Fragment = HomeFragment()
+            val fm = supportFragmentManager
+            val transaction: FragmentTransaction? = fm?.beginTransaction()
+            transaction?.replace(R.id.nav_host_fragment, fragment)
+            transaction?.commit()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -222,12 +281,21 @@ class MainActivity : AppCompatActivity() {
                 (sleepTime.progress+wakeTime.progress)
             )
 
-        // Return to Sleep Fragment TODO: OR go to next log if logging everything
-        val fragment: Fragment = SleepFragment()
-        val fm = supportFragmentManager
-        val transaction: FragmentTransaction? = fm?.beginTransaction()
-        transaction?.replace(R.id.nav_host_fragment, fragment)
-        transaction?.commit()
+        // Return to Sleep Fragment
+        if(boolAddAll == 0) {
+            val fragment: Fragment = SleepFragment()
+            val fm = supportFragmentManager
+            val transaction: FragmentTransaction? = fm?.beginTransaction()
+            transaction?.replace(R.id.nav_host_fragment, fragment)
+            transaction?.commit()
+        }
+        else{
+            val fragment: Fragment = BodyScoringFragment()
+            val fm = supportFragmentManager
+            val transaction: FragmentTransaction? = fm?.beginTransaction()
+            transaction?.replace(R.id.nav_host_fragment, fragment)
+            transaction?.commit()
+        }
 
     }
 
