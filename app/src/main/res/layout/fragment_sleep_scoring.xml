@@ -24,42 +24,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="When was the processing unit last rested?"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022" />
 
-    <SeekBar
-        android:id="@+id/sleepTime"
-        android:layout_width="324dp"
-        android:layout_height="24dp"
+    <com.timesliderrangepicker.library.TimeSliderRangePicker
+        android:id="@+id/timeSelect"
+        android:layout_width="360dp"
+        android:layout_height="346dp"
+        android:layout_margin="40dp"
+        android:layout_marginBottom="8dp"
+        android:padding="15dp"
+        app:arc_color_am="#FFFFD52D"
+        app:arc_color_pm="#FF19034E"
+        app:arc_dash_size="20dp"
+        app:border_color="#3F484F"
+        app:border_thickness="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sleepQuestion"
-        app:layout_constraintVertical_bias="0.069" />
-
-    <SeekBar
-        android:id="@+id/wakeTime"
-        android:layout_width="324dp"
-        android:layout_height="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sleepQuestion"
-        app:layout_constraintVertical_bias="0.224" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        app:thumb_size="28dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"
-        android:onClick="sleepSaveBtnClicked"
-        android:clickable="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@android:drawable/ic_media_ff"
-        tools:layout_editor_absoluteX="313dp"
-        tools:layout_editor_absoluteY="367dp" />
+        android:clickable="true"
+        android:onClick="sleepSaveBtnClicked"
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundImgDandy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.867"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.875"
+        app:srcCompat="@android:drawable/ic_media_ff" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,15 +6,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.hapiy.MainActivity
 import com.hapiy.R
-import com.hapiy.ui.home.HomeFragment
+import de.ehsun.coloredtimebar.TimelineView
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -41,11 +42,50 @@ class SleepFragment : Fragment() {
 
         val activity = this.activity as MainActivity?
         val sleepScore: String = activity?.getPillarValue(getDateAsInt(LocalDateTime.now()), MainActivity.PILLAR.SLEEP.ordinal, MainActivity.SLEEP_TYPE.SLEEP_SCORE.ordinal).toString()
+//        var wakeList: Queue<Int> = activity?.wakeTimeDatabase
 
         val scoreText: TextView = root.findViewById(R.id.text_sleep)
+        val sleepCyclesNotAvailable: TextView = root.findViewById(R.id.sleepCyclesNotAvailable)
+        var sleepTimesList: List<TimelineView> = listOf(root.findViewById(R.id.sleepTimes1), root.findViewById(R.id.sleepTimes2), root.findViewById(R.id.sleepTimes3), root.findViewById(R.id.sleepTimes4), root.findViewById(R.id.sleepTimes5), root.findViewById(R.id.sleepTimes6), root.findViewById(R.id.sleepTimes7))
         if( sleepScore != "0" )
         {
             scoreText.text = "$sleepScore%"
+            scoreText.textSize = 50F
+            scoreText.extendedPaddingTop
+
+            //hide add btn
+            val addBtn: FloatingActionButton = root.findViewById(R.id.logSleepBtn)
+            addBtn.hide()
+        }
+
+        if(activity?.wakeTimeDatabase?.size != 0)
+        {
+            sleepCyclesNotAvailable.visibility = View.INVISIBLE
+            sleepTimesList.forEach{
+                it.visibility = View.INVISIBLE
+            }
+
+            var i: Int = 0
+            activity?.wakeTimeDatabase?.forEach {
+                // set wake and sleep times into the time bands
+                //timelineView.setAvailableTimeRange(listOf("07:00 - 10:15", "12:00 - 15:00"))
+                val dateformat = SimpleDateFormat("hh:mm") // dateformat.format(c.getTime());
+                var sleepTimeIt: Calendar = activity?.sleepTimeDatabase[i]
+                // if asleep before midnight
+                if (sleepTimeIt.timeInMillis > 43200000) {
+                    sleepTimesList[i].setAvailableTimeRange(listOf("00:00 - ${dateformat.format(it.time)}", "${dateformat.format(sleepTimeIt.time)} - 24:59"))
+                }
+                else {
+                    sleepTimesList[i].setAvailableTimeRange(listOf("${dateformat.format(sleepTimeIt.time)} - ${dateformat.format(it.time)}"))
+                }
+                sleepTimesList[i].visibility = View.VISIBLE
+            }
+        }
+        else{
+            sleepCyclesNotAvailable.visibility = View.VISIBLE
+            sleepTimesList.forEach{
+                it.visibility = View.INVISIBLE
+            }
         }
 
 

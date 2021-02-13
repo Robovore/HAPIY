@@ -4,23 +4,21 @@ import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.hapiy.ui.home.HappyScoringFragment
 import com.hapiy.ui.body.BodyFragment
 import com.hapiy.ui.body.BodyScoringFragment
 import com.hapiy.ui.create.CreateFragment
+import com.hapiy.ui.home.HappyScoringFragment
 import com.hapiy.ui.home.HomeFragment
 import com.hapiy.ui.mind.CreateScoringFragment
 import com.hapiy.ui.mind.MindFragment
 import com.hapiy.ui.mind.MindScoringFragment
 import com.hapiy.ui.sleep.SleepFragment
 import com.hapiy.ui.sleep.SleepScoringFragment
-import kotlinx.android.synthetic.main.fragment_body.*
 import kotlinx.android.synthetic.main.fragment_body_scoring.*
 import kotlinx.android.synthetic.main.fragment_create_scoring.*
 import kotlinx.android.synthetic.main.fragment_mind_scoring.*
@@ -40,8 +38,8 @@ class MainActivity : AppCompatActivity() {
 
     // Manage Sleep Scorings
     enum class SLEEP_TYPE { SLEEP_SCORE, SLEEP_TIME_AVG, WAKE_TIME_AVG }
-    val sleepTimeDatabase: Queue<Int> = LinkedList<Int>()
-    val wakeTimeDatabase: Queue<Int> = LinkedList<Int>()
+    var sleepTimeDatabase: MutableList<Calendar> = mutableListOf()
+    var wakeTimeDatabase: MutableList<Calendar> = mutableListOf()
 
     // Manage Fitness Scorings
     enum class BODY_TYPE { FOOD_SCORE, LOW_FITNESS, HIGH_FITNESS, GOOD_FOOD, BAD_FOOD, FITNESS_SCORE }
@@ -263,22 +261,48 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @ExperimentalStdlibApi
     @RequiresApi(Build.VERSION_CODES.O)
     fun sleepSaveBtnClicked(v: View?) {
         // Save values
-        sleepTimeDatabase?.add(sleepTime.progress)
-        wakeTimeDatabase?.add(wakeTime.progress)
-        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.SLEEP.ordinal)
-            ?.set(MainActivity.SLEEP_TYPE.SLEEP_TIME_AVG.ordinal,
-                sleepTimeDatabase.average().toInt()
-            )
-        database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.SLEEP.ordinal)
-            ?.set(MainActivity.SLEEP_TYPE.WAKE_TIME_AVG.ordinal,
-                wakeTimeDatabase.average().toInt()
-            )
+        var sleepTime: Calendar = timeSelect.end//"${timeSelect.end.get(Calendar.HOUR).toString()}:${timeSelect.end.get(Calendar.MINUTE).toString()}"
+        var wakeTime: Calendar = timeSelect.start//"${timeSelect.start.get(Calendar.HOUR).toString()}:${timeSelect.start.get(Calendar.MINUTE).toString()}"
+        sleepTimeDatabase.add(sleepTime)
+        wakeTimeDatabase.add(wakeTime)
+
+        //if more than seven remove oldest
+        if(sleepTimeDatabase.size > 7)
+            sleepTimeDatabase.removeFirstOrNull()
+        if(wakeTimeDatabase.size > 7)
+            wakeTimeDatabase.removeFirstOrNull()
+
+        // Get Sleep Score
+        var sleepScoreCalc: Int = 100
+        var prevTime: Long
+        var currTime: Long
+        var i: Int = 1
+        for (i in 1..sleepTimeDatabase.size-1 ){
+            prevTime = sleepTimeDatabase[i-1].timeInMillis
+            currTime = sleepTimeDatabase[i].timeInMillis
+            if (currTime > prevTime + 1800000 || currTime < prevTime - 1800000) // not within +/-30 minutes
+            {
+                //TODO Make this scoring make more sense
+                sleepScoreCalc -= 5
+            }
+        }
+        for (i in 1..wakeTimeDatabase.size-1 ){
+            prevTime = wakeTimeDatabase[i-1].timeInMillis
+            currTime = wakeTimeDatabase[i].timeInMillis
+            if (currTime > prevTime + 1800000 || currTime < prevTime - 1800000) // not within +/-30 minutes
+            {
+                //TODO Make this scoring make more sense
+                sleepScoreCalc -= 5
+            }
+        }
+        var prevTimeWake: Int
         database?.get(getDateAsInt(LocalDateTime.now()))?.get(MainActivity.PILLAR.SLEEP.ordinal)
             ?.set(MainActivity.SLEEP_TYPE.SLEEP_SCORE.ordinal,
-                (sleepTime.progress+wakeTime.progress)
+                (sleepScoreCalc)
             )
 
         // Return to Sleep Fragment

@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.hapiy"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -53,4 +53,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    implementation 'com.github.ehsunshine:colored-time-selector:master-SNAPSHOT'
+    implementation 'com.github.dvird:timerangepicker:master'
+
+
 }

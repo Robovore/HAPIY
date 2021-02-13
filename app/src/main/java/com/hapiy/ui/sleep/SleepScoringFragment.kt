@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.hapiy.MainActivity
 import com.hapiy.R
 import com.hapiy.ui.home.HomeFragment
+import com.timesliderrangepicker.library.TimeSliderRangePicker
 import kotlinx.android.synthetic.main.fragment_sleep_scoring.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -41,8 +42,7 @@ class SleepScoringFragment : Fragment() {
             ViewModelProviders.of(this).get(SleepViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_sleep_scoring, container, false)
 
-        val sleepTime: SeekBar = root.findViewById(R.id.sleepTime)
-        val wakeTime: SeekBar = root.findViewById(R.id.wakeTime)
+        val timeSelect: TimeSliderRangePicker = root.findViewById(R.id.timeSelect)
 
 
         return root
